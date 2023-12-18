@@ -9,3 +9,6 @@ edition = "2021"
 regex = "1.10.2"
 headless_chrome = {git = "https://github.com/atroche/rust-headless-chrome", features = ["fetch"]}
 chrono = "0.4.31"
+
+[profile.release]
+panic = 'abort'

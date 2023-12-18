@@ -15,9 +15,9 @@ pub fn python_parse_reserved_word(text: &str) -> String {
             &after,
             "<span class='reserved_word'>$1</span><span class='function'>$2</span><span class='comma'>:</span></pre>",
         )
-        .to_string();
+        .to_string()
 
-    todo!("bool or Noneのスタイルを分ける")
+    // todo!("bool or Noneのスタイルを分ける")
 }
 
 pub fn python_parse_operater(text: &str) -> String {

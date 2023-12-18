@@ -1,11 +1,12 @@
 use chrono::Local;
 use headless_chrome::types::PrintToPdfOptions;
 use headless_chrome::Browser;
+mod parse_python;
+use crate::parse_python::*;
 use regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
-
 /// Reads the contents of a file and returns it as a string.
 ///
 /// # Arguments
@@ -64,13 +65,15 @@ pub fn save_html(text: &str, path: &str) {
 /// # Arguments
 ///
 /// * `path` - A string slice that represents the path to the HTML file.
-pub fn html_to_pdf(path: &str) {
+pub fn html_to_pdf(html_path: &str) {
+    println!("saveing pdf...");
+
     let browser = Browser::default().expect("browser init err");
     let tab = browser.new_tab().expect("browser new tab err");
 
     // Navigate to the HTML file
-    tab.navigate_to(path).expect("Navigate err");
-    tab.wait_for_element("body").unwrap();
+    tab.navigate_to(html_path).expect("Navigate err");
+    tab.wait_for_element("body").expect("wait_for_element err");
 
     let mut options = Some(PrintToPdfOptions::default());
     options.as_mut().unwrap().print_background = Some(true);
@@ -80,10 +83,12 @@ pub fn html_to_pdf(path: &str) {
     options.as_mut().unwrap().margin_bottom = Some(0 as f64);
 
     match tab.print_to_pdf(options) {
-        Err(_) => panic!("print_to_pdf err"),
+        Err(_) => println!("print_to_pdf err"),
         Ok(pdf_data) => {
-            let mut file = File::create("./tmp.pdf").expect("create file err");
+            let mut file = File::create("./output.pdf").expect("create file err");
             file.write_all(&pdf_data).expect("write file err");
+
+            println!("done");
         }
     }
 }
@@ -104,4 +109,20 @@ pub fn add_date() -> String {
         ),
         None => panic!("add_date err"),
     }
+}
+
+/// Adds syntax highlighting to Python code.
+/// # Arguments
+/// * `before` - A string slice that represents the input text.
+/// # Returns
+/// A html string with syntax highlighting added to the input text.
+pub fn python_hightlight(before: String) -> String {
+    let mut parse_after = before;
+    parse_after = python_parse_string(&parse_after);
+    parse_after = python_parse_operater(&parse_after);
+    parse_after = python_parse_comma(&parse_after);
+    parse_after = python_parse_comment(&parse_after);
+    parse_after = python_parse_reserved_word(&parse_after);
+    parse_after = python_parse_function(&parse_after);
+    parse_after
 }
