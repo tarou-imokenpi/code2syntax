@@ -1,8 +1,8 @@
 use regex::Regex;
 
 pub fn python_parse_comment(text: &str) -> String {
-    let pattern = Regex::new(r"(.*)(#.*)").unwrap();
-    let after = pattern.replace_all(&text, "$1<span class='comment'>$2</span>");
+    let pattern = Regex::new(r"#.*").unwrap();
+    let after = pattern.replace_all(&text, "<span class='comment'>$0</span>");
     after.to_string()
 }
 
