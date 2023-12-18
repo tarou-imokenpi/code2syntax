@@ -15,7 +15,9 @@ pub fn python_parse_reserved_word(text: &str) -> String {
             &after,
             "<span class='reserved_word'>$1</span><span class='function'>$2</span><span class='comma'>:</span></pre>",
         )
-        .to_string()
+        .to_string();
+
+    todo!("bool or Noneのスタイルを分ける")
 }
 
 pub fn python_parse_operater(text: &str) -> String {
@@ -68,8 +70,16 @@ mod tests {
 
     #[test]
     fn test_python_parse_reserved_word() {
-        let text = "if True and False:";
-        let expected = "<span class='reserved_word'>if</span> <span class='reserved_word'>True</span> <span class='reserved_word'>and</span> <span class='reserved_word'>False</span>:";
+        let text = "if num:";
+        let expected = "<span class='reserved_word'>if</span> num:";
+        assert_eq!(python_parse_reserved_word(text), expected);
+    }
+
+    #[test]
+    fn test_python_parse_reserved_word2() {
+        let text = "while True:";
+        let expected =
+            "<span class='reserved_word'>while</span> <span class='bool_or_None'>True</span:";
         assert_eq!(python_parse_reserved_word(text), expected);
     }
 
