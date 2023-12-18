@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+/* @font-face {
+    font-family: "JetBrainsMonoNL";
+    src: url("src/JetBrainsMonoNL-Regular.ttf") format("truetype");
+} */
+* {
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0;
+    margin: 0;
+}
+body {
+    margin: 50px;
+    padding: 0;
+    background-color: rgba(171, 184, 195, 1);
+    color: white;
+}
+
+.code_block{
+    background-color: #272822;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #75715e;
+    font-size: 18px;
+    line-height: 0.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin: 0;
+}
+
+.reserved_word {
+    color: #f92672;
+}
+
+.function {
+    color: rgb(146, 55, 146);
+}
+.comment {
+    color: #75715e;
+}
+
+.comma {
+    color: white;
+}
+
+.string {
+    color: #E6DB74;
+}
+
+.constant {
+    color: #ae81ff;
+}
+
+.date {
+    color: black;
+    text-align: right;
+}
